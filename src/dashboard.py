@@ -15,6 +15,15 @@ DATABASE_FILE_PATH = os.path.join(BASE_DIR, '..', 'db', 'risk_database.db')
 DB_URL = f"sqlite:///{DATABASE_FILE_PATH}"
 #DB_URL = f"sqlite:///{db_abs_path}"
 
+# FOR GITHUB PAGES
+GITHUB_REPO_NAME = '/crime_risk_dashboard/'
+
+app = dash.Dash(__name__,
+                external_stylesheets=[dbc.themes.BOOTSTRAP],
+                requests_pathname_prefix=GITHUB_REPO_NAME,
+                routes_pathname_prefix=GITHUB_REPO_NAME
+               )
+
 # Connection to db
 engine = create_engine(DB_URL)
 
