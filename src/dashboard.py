@@ -18,6 +18,7 @@ DB_URL = f"sqlite:///{DATABASE_FILE_PATH}"
 # FOR GITHUB PAGES
 GITHUB_REPO_NAME = '/crime_risk_dashboard/'
 
+# Dash config
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.BOOTSTRAP],
                 requests_pathname_prefix=GITHUB_REPO_NAME,
@@ -40,9 +41,6 @@ def get_data_from_db():
 
 # Load initial data
 df_full = get_data_from_db()
-
-# Dash config
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Layout components
 header = dbc.Container([
