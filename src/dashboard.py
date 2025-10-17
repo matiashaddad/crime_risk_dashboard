@@ -20,9 +20,9 @@ GITHUB_REPO_NAME = '/crime_risk_dashboard/'
 
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.BOOTSTRAP],
-                #requests_pathname_prefix=GITHUB_REPO_NAME,
-                #routes_pathname_prefix=GITHUB_REPO_NAME
-                serve_locally=True
+                requests_pathname_prefix=GITHUB_REPO_NAME,
+                routes_pathname_prefix=GITHUB_REPO_NAME
+                #serve_locally=True
                )
 
 # Connection to db
