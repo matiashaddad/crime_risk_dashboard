@@ -9,10 +9,18 @@ import os
 
 # DB config
 # DATABASE_FILE = '../db/risk_database.db'
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_FILE_PATH = os.path.join(BASE_DIR, '..', 'db', 'risk_database.db')
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Repo root in Render
+BASE_DIR = os.getcwd()
+#DATABASE_FILE_PATH = os.path.join(BASE_DIR, '..', 'db', 'risk_database.db')
+
+# Render path
+DATABASE_FILE_PATH = os.path.join(BASE_DIR, 'db', 'risk_database.db')
+
 # db_abs_path = os.path.abspath(DATABASE_FILE)
 DB_URL = f"sqlite:///{DATABASE_FILE_PATH}"
+
 #DB_URL = f"sqlite:///{db_abs_path}"
 
 # FOR GITHUB PAGES
