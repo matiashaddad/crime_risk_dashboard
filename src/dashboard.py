@@ -184,6 +184,9 @@ def update_graphs(selected_countries, max_crime_index):
 
     return fig_map, fig_scatter
 
+# For Render: export variable server
+server = app.server
+
 # Execute app
 if __name__ == '__main__':
     print("Iniziating Dashboard. Go to http://127.0.0.1:8050/")

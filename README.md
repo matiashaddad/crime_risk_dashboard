@@ -4,20 +4,6 @@ This project is an interactive web dashboard built with Python Dash/Plotly and S
 
 It shows a global map and a city-level scatterplot, allowing users to filter data and analyze the relationship between the Crime and the Safety Index.
 
-## 📂 Project Structure
-
-crime_risk_dashboard/
-├── data/
-│   └── world_crime_index_2023.csv  # Raw Dataset
-├── db/
-│   └── risk_database.db             # SQLite Database
-├── src/
-│   ├── etl_process.py             # Data Loading and Transformation (ETL)
-│   ├── dashboard.py               # Dash/Plotly Web Application
-│   └── database_schema.sql        # SQL Schema for the database
-├── requirements.txt               # Python dependencies
-└── README.md
-
 ## Set up and launch dashboard locally:
 
 ### 1. Prerequisites
