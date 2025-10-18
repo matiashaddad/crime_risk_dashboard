@@ -4,6 +4,7 @@ dash-bootstrap-components==2.0.4
 plotly==5.24.1
 pandas
 numpy
+SQLAlchemy
 
 # Gunicorn-Render Dependencies
 gunicorn
