@@ -16,13 +16,13 @@ DB_URL = f"sqlite:///{DATABASE_FILE_PATH}"
 #DB_URL = f"sqlite:///{db_abs_path}"
 
 # FOR GITHUB PAGES
-GITHUB_REPO_NAME = '/crime_risk_dashboard/'
+# GITHUB_REPO_NAME = '/crime_risk_dashboard/'     not needed for render
 
 # Dash config
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.BOOTSTRAP],
-                requests_pathname_prefix=GITHUB_REPO_NAME,
-                routes_pathname_prefix=GITHUB_REPO_NAME
+                # requests_pathname_prefix=GITHUB_REPO_NAME,    not needed for render
+                # routes_pathname_prefix=GITHUB_REPO_NAME      not needed for render
                 #serve_locally=True
                )
 
@@ -37,10 +37,23 @@ def get_data_from_db():
         return df
     except Exception as e:
         print(f"Error while reading database: {e}")
-        return pd.DataFrame()
+        return pd.DataFrame(columns=['country', 'crime_index', 'safety_index', 'city', 'rank'])
 
 # Load initial data
 df_full = get_data_from_db()
+
+# Check data before using df_full
+if df_full.empty or 'country' not in df_full.columns:
+    print("Error: DataFrame empty or missing 'country' column. Using mock-data for layout.")
+    # Mocks for layout
+    country_options = [{'label': 'N/A', 'value': 'N/A'}]
+    min_crime = 0
+    max_crime = 100
+else:
+    country_options = [{'label': country, 'value': country}
+                       for country in sorted(df_full['country'].unique())]
+    min_crime = df_full['crime_index'].min()
+    max_crime = df_full['crime_index'].max()
 
 # Layout components
 header = dbc.Container([
@@ -57,12 +70,10 @@ filter_controls_content = dbc.Container([
             # Country Dropdown
             dcc.Dropdown(
                 id='country-dropdown',
-                options=[{'label': country, 'value': country}
-                         for country in sorted(df_full['country'].unique())],
+                options=country_options,
                 placeholder="Select Country (Optional)",
                 multi=True,
                 style={'backgroundColor': '#f8f9fa'}
-
             ),
             width=6,
             className="mb-3"
@@ -74,10 +85,10 @@ filter_controls_content = dbc.Container([
             # Slider with Crime Index
             dcc.Slider(
                 id='crime-index-slider',
-                min=df_full['crime_index'].min(),
-                max=df_full['crime_index'].max(),
+                min=min_crime,
+                max=max_crime,
                 step=5,
-                value=df_full['crime_index'].max(),
+                value=max_crime,
                 marks={i: str(i) for i in range(0, 101, 10)},
                 tooltip={"placement": "bottom", "always_visible": True}
             ),
@@ -143,6 +154,10 @@ app.layout = dbc.Container([
      Input('crime-index-slider', 'value')]
 )
 def update_graphs(selected_countries, max_crime_index):
+    # Check DataFrame
+    if df_full.empty or 'country' not in df_full.columns:
+        return px.bar(title="Data Load Error: Check DB File"), px.bar(title="Data Load Error: Check DB File")
+
     # Filter by Crime Index
     df_filtered = df_full[df_full['crime_index'] <= max_crime_index].copy()
 
